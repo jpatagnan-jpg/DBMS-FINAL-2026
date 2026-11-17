@@ -1,0 +1,125 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Orders · QuickCart{% endblock %}
+
+{% block content %}
+
+<div class="pagehead">
+    <div>
+        <div class="eyebrow">TRANSACTIONS</div>
+        <h1>Orders</h1>
+        <p class="muted">
+            {{ 'All customer orders' if current_user.role=='admin' else 'Your order history' }}.
+        </p>
+    </div>
+
+    <a class="primary" href="{{ url_for('order_new') }}">
+        ＋ New order
+    </a>
+</div>
+
+<div class="panel">
+    <div class="tablewrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order</th>
+
+                    {% if current_user.role == 'admin' %}
+                    <th>Customer</th>
+                    {% endif %}
+
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+
+                    {% if current_user.role == 'admin' %}
+                    <th>Update status</th>
+                    <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for o in orders %}
+                <tr>
+                    <td><b>#{{ o.id }}</b></td>
+
+                    {% if current_user.role == 'admin' %}
+                    <td>
+                        {{ o.full_name }}
+                        <small class="subline">{{ o.email }}</small>
+                    </td>
+                    {% endif %}
+
+                    <td>{{ o.created_at }}</td>
+
+                    <td>
+                        ₱{{ '%.2f'|format(o.total) }}
+                    </td>
+
+                    <td>
+                        <span class="status">{{ o.status }}</span>
+                    </td>
+
+                    {% if current_user.role == 'admin' %}
+                    <td>
+                        <form class="inlineform"
+                              method="post"
+                              action="{{ url_for('order_status', oid=o.id) }}">
+
+                            <input type="hidden"
+                                   name="_csrf"
+                                   value="{{ csrf_token }}">
+
+                            <select name="status">
+                                {% for s in [
+                                    'Pending',
+                                    'Processing',
+                                    'Shipped',
+                                    'Completed',
+                                    'Cancelled'
+                                ] %}
+                                <option {% if o.status == s %}selected{% endif %}>
+                                    {{ s }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <button class="smallbtn" type="submit">
+                                Save
+                            </button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form method="post"
+                              action="{{ url_for('order_delete', oid=o.id) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this order? The product stock will be restored.');">
+
+                            <input type="hidden"
+                                   name="_csrf"
+                                   value="{{ csrf_token }}">
+
+                            <button class="smallbtn" type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="7" class="empty">
+                        No orders yet. Create an order to test database operations.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
