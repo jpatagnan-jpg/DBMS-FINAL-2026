@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f8f2">
+  <title>UtangTrack — Store dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="UtangTrack home">
+        <span class="brand-mark"><i data-lucide="leaf"></i></span>
+        <span class="brand-name">utang<span>track</span><small>STORE MANAGER</small></span>
+      </a>
+      <div class="store-switch"><span class="store-avatar">M</span><span class="store-label"><b id="sidebarStore">Mila's Sari-Sari</b><small>Store workspace</small></span><i data-lucide="chevrons-up-down"></i></div>
+      <nav class="navigation" aria-label="Main navigation">
+        <p class="nav-caption">WORKSPACE</p>
+        <button class="nav-link active" data-page="dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+        <button class="nav-link" data-page="customers"><i data-lucide="users-round"></i><span>Customers</span><span class="nav-count" id="customerCount">0</span></button>
+        <button class="nav-link" data-page="utang"><i data-lucide="book-open-check"></i><span>Utang management</span></button>
+        <button class="nav-link" data-page="payments"><i data-lucide="wallet"></i><span>Payments</span></button>
+        <button class="nav-link" data-page="ledger"><i data-lucide="notebook-tabs"></i><span>Customer ledger</span></button>
+        <button class="nav-link" data-page="products"><i data-lucide="package"></i><span>Products</span></button>
+        <button class="nav-link" data-page="reports"><i data-lucide="chart-no-axes-combined"></i><span>Reports</span></button>
+        <p class="nav-caption nav-caption-lower">PREFERENCES</p>
+        <button class="nav-link" data-page="settings"><i data-lucide="settings-2"></i><span>Settings</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-icon"><i data-lucide="sparkles"></i></span><b>Your store, in control.</b><p>Keep every suki and every piso in order.</p><button data-page="reports">Explore reports <i data-lucide="arrow-up-right"></i></button></div>
+        <button class="profile-button"><span class="profile-avatar">MC</span><span><b id="ownerLabel">Mila Cruz</b><small>Store owner</small></span><i data-lucide="more-horizontal"></i></button>
+      </div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menuToggle" aria-label="Toggle navigation"><i data-lucide="menu"></i></button>
+        <div class="breadcrumb"><span>Workspace</span><i data-lucide="chevron-right"></i><b id="pageCrumb">Dashboard</b></div>
+        <div class="topbar-right"><span class="today-chip"><i data-lucide="calendar-days"></i><span id="todayText"></span></span><button class="icon-button notification-button" aria-label="Notifications"><i data-lucide="bell"></i><span></span></button><span class="top-divider"></span><span class="top-avatar">MC</span></div>
+      </header>
+      <div class="content" id="content"></div>
+      <footer class="footer"><span>UtangTrack <span class="footer-dot">•</span> Alalay sa bawat suki, bawat piso.</span><span>Made for your neighborhood store <span class="footer-heart">♥</span></span></footer>
+    </main>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></section></div>
+  <script src="app.js"></script>
+</body>
+</html>
